@@ -17,22 +17,32 @@ return `
 </li>`;
 } )
 .join('');//повертаю рядок в одну стрічку
-
 gallery.insertAdjacentHTML("beforeend", galleryElements);//вставляю елементи в галерею
-
 gallery.addEventListener('click', (event) => {
     event.preventDefault(); //зупиняю перезавантаження сторінки
      if (event.target.nodeName !== "IMG") return; //перевіряю назву елемента
-    const waySrc = event.target.dataset.source; //прописую шлях до src
-       
+    const waySrc = event.target.dataset.source; //прописую шлях до src через івентаргет    
 //створюю бокс
     const instance = basicLightbox.create(`  
     <img src="${waySrc}" width="800" height="600"> 
-`);
-
-instance.show()
+`,
+{
+        onShow: () => {
+           window.addEventListener('keydown', onEscKeyPress);
+         },
+         onClose: () => {
+           window.removeEventListener('keydown', onEscKeyPress);
+         },
+        }
+);
+instance.show() //відкриваю модальне вікно
+function onEscKeyPress(event) {
+  if(event.code === 'Escape') {
+     instance.close();
+  }
+}
+   
 });
-console.log(galleryElements);
 console.log(galleryItems);
 
 
