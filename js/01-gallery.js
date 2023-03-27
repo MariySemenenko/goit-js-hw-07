@@ -18,6 +18,7 @@ return `
 } )
 .join('');//повертаю рядок в одну стрічку
 gallery.insertAdjacentHTML("beforeend", galleryElements);//вставляю елементи в галерею
+
 gallery.addEventListener('click', (event) => {
     event.preventDefault(); //зупиняю перезавантаження сторінки
      if (event.target.nodeName !== "IMG") return; //перевіряю назву елемента
